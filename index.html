@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin - Conectando Artistas</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd59;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        main h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        main p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #ffdd59;
+            color: #333;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            background-color: #ffc107;
+        }
+
+        footer {
+            padding: 15px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Benjamin</h1>
+       <nav>
+    <a href="sobre.html">Sobre</a>
+    <a href="artistas.html">Artistas</a>
+    <a href="contato.html">Contato</a>
+    </nav>
+
+    </header>
+
+    <main>
+       
+
+        <h2>Conectando Talento a Oportunidades</h2>
+        <p>Benjamin é a plataforma que aproxima pequenos artistas de restaurantes, bares, casas de show e eventos, permitindo que eles ofereçam seus serviços como freelancers e que os estabelecimentos encontrem o talento ideal de forma rápida e prática.</p>
+        <button class="cta-button">Comece Agora</button>
+        <br>
+        <button class="cta-button" onclick="window.location.href='equipe.html'">
+    Conheça os Fundadores do Projeto.
+</button>
+    </main>
+
+    <footer>
+        &copy; 2025 Benjamin. Todos os direitos reservados.
+    </footer>
+</body>
+</html>
