@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procurar Estabelecimentos - Benjamin</title>
+  <style>
+    *{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+    body{
+      background:linear-gradient(to right,#6a11cb,#2575fc);
+      color:#fff;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:60px 20px;
+      animation:fadeIn 1s ease forwards;
+    }
+
+    h1{text-align:center;margin-bottom:30px;}
+    .hall{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:25px;
+      max-width:1000px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      padding:20px;
+      width:280px;
+      border-radius:15px;
+      transition:transform 0.3s, background 0.3s;
+      box-shadow:0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .card:hover{
+      transform:scale(1.05);
+      background:rgba(255,255,255,0.2);
+    }
+
+    .card h3{color:#ffdd59; margin-bottom:10px;}
+    .card p{font-size:0.9em; color:#e0e0e0;}
+
+    .back-link{
+      margin-top:40px;
+      color:#fff;
+      text-decoration:none;
+      font-size:0.9em;
+      transition:color 0.3s;
+    }
+
+    .back-link:hover{color:#ffdd59;}
+
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  </style>
+</head>
+<body>
+  <h1>Estabelecimentos Cadastrados</h1>
+
+  <div class="hall">
+    <div class="card">
+      <h3>Bar do João</h3>
+      <p><strong>Local:</strong> Recife - PE</p>
+      <p><strong>Estilo:</strong> Samba</p>
+    </div>
+
+    <div class="card">
+      <h3>Pub Rock City</h3>
+      <p><strong>Local:</strong> Belo Horizonte - MG</p>
+      <p><strong>Estilo:</strong> Rock</p>
+    </div>
+
+    <div class="card">
+      <h3>Forró da Praça</h3>
+      <p><strong>Local:</strong> Fortaleza - CE</p>
+      <p><strong>Estilo:</strong> Forró</p>
+    </div>
+
+    <div class="card">
+      <h3>Espaço HipHop Central</h3>
+      <p><strong>Local:</strong> São Paulo - SP</p>
+      <p><strong>Estilo:</strong> HipHop</p>
+    </div>
+  </div>
+
+  <a href="estabelecimentos.html" class="back-link">⬅ Voltar</a>
+</body>
+</html>

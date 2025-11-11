@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Estabelecimento - Benjamin</title>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .form-container {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 40px 50px;
+      border-radius: 20px;
+      width: 420px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      animation: slideUp 0.8s ease forwards;
+    }
+
+    h1 {
+      text-align:center;
+      margin-bottom: 25px;
+      font-size: 1.8em;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display:block;
+      font-size:0.9em;
+      margin-bottom:6px;
+    }
+
+    .input-group input,
+    .input-group select {
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:rgba(255,255,255,0.2);
+      color:#fff;
+      font-size:1em;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .input-group input:focus, select:focus {
+      background: rgba(255,255,255,0.3);
+      box-shadow:0 0 10px rgba(255,221,89,0.5);
+      outline:none;
+    }
+
+    .cta-button {
+      background: linear-gradient(45deg, #ffdd59, #ffc107);
+      color:#333;
+      padding:12px;
+      border:none;
+      border-radius:30px;
+      font-weight:bold;
+      font-size:1em;
+      width:100%;
+      cursor:pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(255,221,89,0.6);
+    }
+
+    .back-link {
+      display:block;
+      margin-top:20px;
+      text-align:center;
+      color:#fff;
+      font-size:0.9em;
+      text-decoration:none;
+      transition:color 0.3s;
+    }
+
+    .back-link:hover {color:#ffdd59;}
+
+    #outros-nicho {
+      display:none;
+      margin-top:10px;
+    }
+
+    @keyframes fadeIn {from{opacity:0;}to{opacity:1;}}
+    @keyframes slideUp {from{opacity:0; transform:translateY(40px);}to{opacity:1; transform:translateY(0);}}
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Cadastro de Estabelecimento</h1>
+    <form>
+      <div class="input-group">
+        <label for="nome">Nome Fantasia</label>
+        <input type="text" id="nome" name="nome" placeholder="Ex: Bar do João" required>
+      </div>
+
+      <div class="input-group">
+        <label for="razao">Razão Social</label>
+        <input type="text" id="razao" name="razao" placeholder="Ex: Bar do João LTDA" required>
+      </div>
+
+      <div class="input-group">
+        <label for="documento">CNPJ / CPF</label>
+        <input type="text" id="documento" name="documento" placeholder="Digite seu CNPJ ou CPF" required>
+      </div>
+
+      <div class="input-group">
+        <label for="endereco">Endereço Completo</label>
+        <input type="text" id="endereco" name="endereco" placeholder="Rua, nº, bairro, cidade - UF" required>
+      </div>
+
+      <div class="input-group">
+        <label for="referencia">Referências (pontos próximos, etc.)</label>
+        <input type="text" id="referencia" name="referencia" placeholder="Ex: Próximo ao Shopping Central">
+      </div>
+
+      <div class="input-group">
+        <label for="nicho">Tipo de Nicho</label>
+        <select id="nicho" name="nicho" required>
+          <option value="" disabled selected>Selecione...</option>
+          <option>Forró</option>
+          <option>Samba</option>
+          <option>Rock</option>
+          <option>Rap</option>
+          <option>HipHop</option>
+          <option>Pop</option>
+          <option>Religioso</option>
+          <option value="outros">Outros</option>
+        </select>
+      </div>
+
+      <div id="outros-nicho" class="input-group">
+        <label for="outros-input">Informe o nicho:</label>
+        <input type="text" id="outros-input" name="outros-input" placeholder="Digite o tipo de nicho">
+      </div>
+
+      <button type="submit" class="cta-button">Cadastrar Estabelecimento</button>
+    </form>
+
+    <a href="estabelecimentos.html" class="back-link">⬅ Voltar</a>
+  </div>
+
+  <script>
+    const nichoSelect = document.getElementById('nicho');
+    const outrosCampo = document.getElementById('outros-nicho');
+
+    nichoSelect.addEventListener('change', function() {
+      if (this.value === 'outros') {
+        outrosCampo.style.display = 'block';
+      } else {
+        outrosCampo.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

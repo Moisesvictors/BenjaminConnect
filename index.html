@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -19,20 +19,34 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         header {
-            padding: 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
             text-align: center;
-            background-color: rgba(0,0,0,0.3);
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            z-index: 10;
+            transition: background 0.4s;
+        }
+
+        header.scrolled {
+            background-color: rgba(0, 0, 0, 0.7);
         }
 
         header h1 {
             font-size: 2.5em;
+            letter-spacing: 2px;
+            animation: fadeDown 1s ease forwards;
         }
 
         nav {
             margin-top: 10px;
+            animation: fadeIn 1.2s ease forwards;
         }
 
         nav a {
@@ -40,11 +54,27 @@
             text-decoration: none;
             margin: 0 15px;
             font-weight: bold;
+            position: relative;
             transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ffdd59;
+            transition: width 0.3s;
         }
 
         nav a:hover {
             color: #ffdd59;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         main {
@@ -54,69 +84,175 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px 20px;
+            padding: 120px 20px 60px;
         }
 
         main h2 {
-            font-size: 2em;
+            font-size: 2.4em;
             margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.3s;
         }
 
         main p {
             font-size: 1.2em;
-            max-width: 600px;
+            max-width: 700px;
             margin-bottom: 30px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.6s;
         }
 
         .cta-button {
-            background-color: #ffdd59;
+            background: linear-gradient(45deg, #ffdd59, #ffc107);
             color: #333;
-            padding: 15px 30px;
+            padding: 15px 35px;
             font-size: 1em;
             font-weight: bold;
             border: none;
             border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .cta-button:hover {
-            transform: scale(1.05);
-            background-color: #ffc107;
+            transform: scale(1.08);
+            box-shadow: 0 6px 25px rgba(255, 221, 89, 0.6);
+        }
+
+        /* Seção de Destaque */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 60px;
+            animation: fadeIn 1s ease forwards 0.8s;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            width: 280px;
+            text-align: center;
+            transition: transform 0.4s, background 0.4s;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            color: #ffdd59;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #f1f1f1;
+            font-size: 0.95em;
         }
 
         footer {
             padding: 15px;
             text-align: center;
-            background-color: rgba(0,0,0,0.3);
+            background-color: rgba(0, 0, 0, 0.3);
+            font-size: 0.9em;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fadeUp {
+            from {opacity: 0; transform: translateY(40px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes fadeDown {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            nav a {
+                display: inline-block;
+                margin: 8px;
+            }
+
+            main h2 {
+                font-size: 1.8em;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <h1>Benjamin</h1>
-       <nav>
+        <nav>
     <a href="sobre.html">Sobre</a>
     <a href="artistas.html">Artistas</a>
+    <a href="estabelecimentos.html">Estabelecimentos</a> 
     <a href="contato.html">Contato</a>
-    </nav>
+    <a href="login.html">Entrar</a>
+</nav>
 
     </header>
 
     <main>
-       
-
         <h2>Conectando Talento a Oportunidades</h2>
         <p>Benjamin é a plataforma que aproxima pequenos artistas de restaurantes, bares, casas de show e eventos, permitindo que eles ofereçam seus serviços como freelancers e que os estabelecimentos encontrem o talento ideal de forma rápida e prática.</p>
-        <button class="cta-button">Comece Agora</button>
-        <br>
+        
+        <button class="cta-button" onclick="window.location.href='login.html'">
+    Comece Agora
+        </button>
+
+        <br><br>
         <button class="cta-button" onclick="window.location.href='equipe.html'">
-    Conheça os Fundadores do Projeto.
-</button>
+            Conheça os Fundadores
+        </button>
+
+        <section class="features">
+            <div class="card">
+                <h3>🎤 Artistas</h3>
+                <p>Cadastre-se e divulgue seu talento para o mundo. Seja descoberto por quem valoriza o seu som.</p>
+            </div>
+            <div class="card">
+                <h3>🏙️ Estabelecimentos</h3>
+                <p>Encontre artistas ideais para seu evento, bar ou restaurante de forma simples e rápida.</p>
+            </div>
+            <div class="card">
+                <h3>🤝 Parcerias</h3>
+                <p>Conecte-se com outras marcas, produtoras e profissionais do meio artístico.</p>
+            </div>
+        </section>
     </main>
 
     <footer>
         &copy; 2025 Benjamin. Todos os direitos reservados.
     </footer>
+
+    <script>
+        // Efeito de mudança no cabeçalho ao rolar a página
+        window.addEventListener("scroll", function() {
+            const header = document.getElementById("header");
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+    </script>
 </body>
 </html>
