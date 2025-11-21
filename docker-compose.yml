@@ -1,0 +1,22 @@
+name: benjamin-connect
+services:
+  web_benjaminconnect:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db_benjaminconnect
+
+  db_benjaminconnect:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_HOST: ${DB_HOST}
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./mysql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql

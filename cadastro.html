@@ -8,7 +8,8 @@
         /* Reset básico */
         * {
             margin: 0;
-            padding: 0;
+            /* 
+            padding: 0; */
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
@@ -17,11 +18,11 @@
             background: linear-gradient(to right, #6a11cb, #2575fc);
             color: #fff;
             height: 100vh;
+            animation: fadeIn 1.2s ease forwards;
+            padding: 20px 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            animation: fadeIn 1.2s ease forwards;
+            align-items: flex-start;
         }
 
         /* Container principal */
@@ -44,13 +45,32 @@
 
         .cadastro-container p {
             font-size: 0.95em;
-            margin-bottom: 25px;
+            /* margin-bottom: 25px; */
             color: #e0e0e0;
+        }
+
+        /* Campos especificos dos usuarios */
+        .campos-especificos{
+            display: none;
+        }
+
+        .campos-especificos h3{
+            padding-bottom: 20px;
+            font-size: 1.3em;
         }
 
         .input-group {
             text-align: left;
             margin-bottom: 18px;
+        }
+
+        .input-group textarea{
+            width: 100%;
+            font-size: 1em;
+            outline: none;
+            resize: none;
+            transition: background 0.3s, box-shadow 0.3s;
+            height: 7em;
         }
 
         .input-group label {
@@ -168,16 +188,6 @@
             </div>
 
             <div class="input-group">
-                <label for="tipo">Você é:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="" disabled selected>Selecione...</option>
-                    <option value="artista">Artista</option>
-                    <option value="estabelecimento">Estabelecimento</option>
-                    <option value="produtor">Produtor</option>
-                </select>
-            </div>
-
-            <div class="input-group">
                 <label for="senha">Senha</label>
                 <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required>
             </div>
@@ -187,14 +197,100 @@
                 <input type="password" id="confirmar" name="confirmar" placeholder="Confirme sua senha" required>
             </div>
 
+            <div class="input-group">
+                <label for="tipo">Você é:</label>
+                <select id="tipo" name="tipo" onchange="mostrarCamposPerfil()" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="ARTISTA">Artista</option>
+                    <option value="ESTABELECIMENTO">Estabelecimento</option>
+                    <option value="PRODUTOR">Produtor</option>
+                </select>
+            </div>
+
+            <hr style="margin: 30px 0; border-color: rgba(255, 255, 255, 0.3);">
+
+            <!-- #### CAMPOS ESPECIFICOS PARA O ARTISTA #### -->
+            <div id="campos-artista" class="campos-especificos">
+                <h3>Detalhes do Artista</h3>
+                <div class="input-group">
+                    <label for="nome_artistico">Nome Artístico/Banda:</label>
+                    <input type="text" id="nome_artistico" name="nome_artistico" placeholder="Ex: Lucas Melody" required>
+                </div>
+                <div class="input-group">
+                    <label for="estado">Estado Base (Ex: SP):</label>
+                    <input type="text" id="estado" name="estado" maxlength="2" placeholder="UF">
+                </div>
+                <div class="input-group">
+                    <label for="bio">Biografia Curta:</label>
+                    <textarea id="bio" name="bio" rows="3" placeholder="Sua descrição e estilo"></textarea>
+                </div>
+            </div>
+            
+            <!-- #### CAMPOS ESPECIFICOS PARA O ESTABELECIMENTO #### -->
+            <div id="campos-estabelecimento" class="campos-especificos">
+                <h3>Detalhes do Local</h3>
+                <div class="input-group">
+                    <label for="nome_fantasia">Nome Fantasia do Local:</label>
+                    <input type="text" id="nome_fantasia" name="nome_fantasia" placeholder="Ex: Pub Rock City" required>
+                </div>
+                <div class="input-group">
+                    <label for="cnpj_cpf">CNPJ/CPF:</label>
+                    <input type="text" id="cnpj_cpf" name="cnpj_cpf" placeholder="Documento do local/responsável" required>
+                </div>
+                <div class="input-group">
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required>
+                </div>
+                <div class="input-group">
+                    <label for="uf">UF (Estado):</label>
+                    <input type="text" id="uf" name="uf" maxlength="2" placeholder="UF" required>
+                </div>
+            </div>
+            
+            <!-- #### CAMPOS ESPECIFICOS PARA O PRODUTOR #### -->
+            <div id="campos-produtor" class="campos-especificos">
+                <h3>Detalhes do Produtor</h3>
+                <div class="input-group">
+                    <label for="produtora">Nome da Produtora/Empresa (Opcional):</label>
+                    <input type="text" id="produtora" name="produtora" placeholder="Ex: Agência Rítmica">
+                </div>
+                <div class="input-group">
+                    <label for="telefone">Telefone de Contato:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" required>
+                </div>
+            </div>
+
             <button type="submit" class="cta-button">Cadastrar</button>
 
-            <div class="extra-links">
-                <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
-            </div>
         </form>
+        <div class="extra-links">
+            <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
+        </div>
 
         <a href="index.html" class="back-link">⬅ Voltar para a Página Inicial</a>
     </div>
+
+    <script>
+        function mostrarCamposPerfil(){
+            const selectElement = document.getElementById('tipo');
+            const perfilSelecionado = selectElement.value;
+
+            const camposArtista = document.getElementById('campos-artista');
+            const camposEstabelecimento = document.getElementById('campos-estabelecimento');
+            const camposProdutor = document.getElementById('campos-produtor');
+
+            camposArtista.style.display = 'none';
+            camposEstabelecimento.style.display = 'none';
+            camposProdutor.style.display = 'none';
+
+            if(perfilSelecionado == "ARTISTA"){
+                camposArtista.style.display='block';
+            }else if(perfilSelecionado == "ESTABELECIMENTO"){
+                camposEstabelecimento.style.display='block'
+            }else if(perfilSelecionado == "PRODUTOR"){
+                camposProdutor.style.display='block';
+            }
+        }
+    </script>
 </body>
 </html>
