@@ -36,6 +36,15 @@
       margin-bottom: 18px;
     }
 
+    .input-group textarea{
+        width: 100%;
+        font-size: 1em;
+        outline: none;
+        resize: none;
+        transition: background 0.3s, box-shadow 0.3s;
+        height: 7em;
+    }
+
     .input-group label {
       display:block;
       font-size:0.9em;
@@ -103,51 +112,81 @@
 <body>
   <div class="form-container">
     <h1>Cadastro de Estabelecimento</h1>
-    <form>
-      <div class="input-group">
-        <label for="nome">Nome Fantasia</label>
-        <input type="text" id="nome" name="nome" placeholder="Ex: Bar do João" required>
-      </div>
 
-      <div class="input-group">
-        <label for="razao">Razão Social</label>
-        <input type="text" id="razao" name="razao" placeholder="Ex: Bar do João LTDA" required>
-      </div>
-
-      <div class="input-group">
-        <label for="documento">CNPJ / CPF</label>
-        <input type="text" id="documento" name="documento" placeholder="Digite seu CNPJ ou CPF" required>
-      </div>
-
-      <div class="input-group">
-        <label for="endereco">Endereço Completo</label>
-        <input type="text" id="endereco" name="endereco" placeholder="Rua, nº, bairro, cidade - UF" required>
-      </div>
-
-      <div class="input-group">
-        <label for="referencia">Referências (pontos próximos, etc.)</label>
-        <input type="text" id="referencia" name="referencia" placeholder="Ex: Próximo ao Shopping Central">
-      </div>
-
-      <div class="input-group">
-        <label for="nicho">Tipo de Nicho</label>
-        <select id="nicho" name="nicho" required>
-          <option value="" disabled selected>Selecione...</option>
-          <option>Forró</option>
-          <option>Samba</option>
-          <option>Rock</option>
-          <option>Rap</option>
-          <option>HipHop</option>
-          <option>Pop</option>
-          <option>Religioso</option>
-          <option value="outros">Outros</option>
-        </select>
-      </div>
-
-      <div id="outros-nicho" class="input-group">
-        <label for="outros-input">Informe o nicho:</label>
-        <input type="text" id="outros-input" name="outros-input" placeholder="Digite o tipo de nicho">
-      </div>
+    <form action="./processa_estabelecimento.php" method="post">
+        <div class="input-group">
+            <label for="razao">Razão Social</label>
+            <input type="text" id="razao" name="razao" placeholder="Ex: Bar do João LTDA" required>
+        </div>
+        <div class="input-group">
+            <label for="nome">Nome Fantasia (Opcional)</label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: Bar do João" required>
+        </div>
+        <div class="input-group">
+            <label for="cidade">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Sua cidade" required>
+        </div>
+        <div class="input-group">
+            <label for="descricao">Referencias: (Opcional)</label>
+            <input type="text" id="referencia" name="referencia" maxlength="2" placeholder="Proximo de ..." required>
+        </div>
+        <div class="input-group">
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required>
+        </div>
+        <div class="input-group">
+            <label for="uf">UF (Estado):</label>
+            <select id="uf" name="uf" required>
+                <option value="" disabled selected>Selecione a UF</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Gêneros Tocados no Local:</label>
+            <div class="input-generos" style="display: flex; flex-wrap: wrap; gap: 10px; color: #fff;">
+                <label><input type="checkbox" name="generos[]" value='Rock'> Rock</label>
+                <label><input type="checkbox" name="generos[]" value="Samba"> Samba</label>
+                <label><input type="checkbox" name="generos[]" value="Forro"> Forró</label>
+                <label><input type="checkbox" name="generos[]" value="Rap"> Rap</label>
+                <label><input type="checkbox" name="generos[]" value="HipHop"> HipHop</label>
+                <label><input type="checkbox" name="generos[]" value="Pop"> Pop</label>
+                <label><input type="checkbox" name="generos[]" value="Gospel"> Gospel</label>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="imagem_local">Imagem do local:</label>
+            <img src="" alt="">
+        </div>
+        <div class="input-group">
+            <label for="descricao">Descrição Breve do Ambiente:</label>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Descrição do ambiente"></textarea>
+        </div>
 
       <button type="submit" class="cta-button">Cadastrar Estabelecimento</button>
     </form>
@@ -156,16 +195,6 @@
   </div>
 
   <script>
-    const nichoSelect = document.getElementById('nicho');
-    const outrosCampo = document.getElementById('outros-nicho');
-
-    nichoSelect.addEventListener('change', function() {
-      if (this.value === 'outros') {
-        outrosCampo.style.display = 'block';
-      } else {
-        outrosCampo.style.display = 'none';
-      }
-    });
   </script>
 </body>
 </html>

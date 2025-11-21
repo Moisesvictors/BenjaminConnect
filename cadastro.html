@@ -59,9 +59,27 @@
             font-size: 1.3em;
         }
 
+        .outros-nicho{
+            display:none;
+            margin-top:10px;
+        }
+
         .input-group {
             text-align: left;
             margin-bottom: 18px;
+        }
+
+        .input-group .input-generos{
+            display: flex; 
+            flex-wrap: wrap;
+            gap: 10px; 
+        }
+
+        .input-group .input-generos label{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
         }
 
         .input-group textarea{
@@ -176,12 +194,15 @@
         <h1>Crie sua Conta</h1>
         <p>Junte-se à comunidade Benjamin e conecte-se com o mundo artístico.</p>
 
-        <form action="#" method="post">
+        <form action="./processa_cadastro.php" method="post">
             <div class="input-group">
                 <label for="nome">Nome completo</label>
                 <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
             </div>
-
+            <div class="input-group">
+                    <label for="cnpj_cpf">CNPJ/CPF:</label>
+                    <input type="text" id="cnpj_cpf" name="cnpj_cpf" placeholder="Identificação" required>
+                </div>
             <div class="input-group">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
@@ -196,7 +217,10 @@
                 <label for="confirmar">Confirmar senha</label>
                 <input type="password" id="confirmar" name="confirmar" placeholder="Confirme sua senha" required>
             </div>
-
+            <div class="input-group">
+                    <label for="telefone">Telefone de Contato:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" required>
+            </div>
             <div class="input-group">
                 <label for="tipo">Você é:</label>
                 <select id="tipo" name="tipo" onchange="mostrarCamposPerfil()" required>
@@ -221,8 +245,28 @@
                     <input type="text" id="estado" name="estado" maxlength="2" placeholder="UF">
                 </div>
                 <div class="input-group">
+                <label>Gêneros Musicais:</label>
+                    <div class="input-generos">
+                        <label><input type="checkbox" name="generos[]" value='Rock'> Rock</label>
+                        <label><input type="checkbox" name="generos[]" value="Samba"> Samba</label>
+                        <label><input type="checkbox" name="generos[]" value="Forro"> Forró</label>
+                        <label><input type="checkbox" name="generos[]" value="Rap"> Rap</label>
+                        <label><input type="checkbox" name="generos[]" value="HipHop"> HipHop</label>
+                        <label><input type="checkbox" name="generos[]" value="Pop"> Pop</label>
+                        <label><input type="checkbox" name="generos[]" value="Gospel"> Gospel</label>
+                    </div>
+                </div>
+                <div id="outros-nicho" class="input-group outros-nicho">
+                    <label for="outros-input">Informe o nicho:</label>
+                    <input type="text" id="outros-input" name="outros-input" placeholder="Digite o tipo de nicho">
+                </div>
+                <div class="input-group">
                     <label for="bio">Biografia Curta:</label>
                     <textarea id="bio" name="bio" rows="3" placeholder="Sua descrição e estilo"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="foto_perfil">Foto de perfil:</label>
+                    <img src="" alt="">
                 </div>
             </div>
             
@@ -230,12 +274,16 @@
             <div id="campos-estabelecimento" class="campos-especificos">
                 <h3>Detalhes do Local</h3>
                 <div class="input-group">
-                    <label for="nome_fantasia">Nome Fantasia do Local:</label>
-                    <input type="text" id="nome_fantasia" name="nome_fantasia" placeholder="Ex: Pub Rock City" required>
+                    <label for="nome_fantasia">Razão Social:</label>
+                    <input type="text" id="razao_social" name="razao_social" placeholder="Ex: Espaço Rock City" required>
                 </div>
                 <div class="input-group">
-                    <label for="cnpj_cpf">CNPJ/CPF:</label>
-                    <input type="text" id="cnpj_cpf" name="cnpj_cpf" placeholder="Documento do local/responsável" required>
+                    <label for="nome_fantasia">Nome Fantasia do Local: (Opcional)</label>
+                    <input type="text" id="nome_fantasia" name="nome_fantasia" placeholder="Ex: Pub Rock City">
+                </div>
+                <div class="input-group">
+                    <label for="cidade">Endereço:</label>
+                    <input type="text" id="endereco" name="endereco" placeholder="Sua cidade" required>
                 </div>
                 <div class="input-group">
                     <label for="cidade">Cidade:</label>
@@ -243,7 +291,60 @@
                 </div>
                 <div class="input-group">
                     <label for="uf">UF (Estado):</label>
-                    <input type="text" id="uf" name="uf" maxlength="2" placeholder="UF" required>
+                    <select id="uf" name="uf" required>
+                        <option value="" disabled selected>Selecione a UF</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                <label>Gêneros Tocados no Local:</label>
+                    <div class="input-generos">
+                        <label><input type="checkbox" name="generos[]" value='Rock'> Rock</label>
+                        <label><input type="checkbox" name="generos[]" value="Samba"> Samba</label>
+                        <label><input type="checkbox" name="generos[]" value="Forro"> Forró</label>
+                        <label><input type="checkbox" name="generos[]" value="Rap"> Rap</label>
+                        <label><input type="checkbox" name="generos[]" value="HipHop"> HipHop</label>
+                        <label><input type="checkbox" name="generos[]" value="Pop"> Pop</label>
+                        <label><input type="checkbox" name="generos[]" value="Gospel"> Gospel</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="descricao">Descrição Breve do Ambiente:</label>
+                    <textarea id="descricao" name="descricao" rows="3" placeholder="Descrição do ambiente"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="descricao">Referencias: (Opcional)</label>
+                    <input type="text" id="referencia" name="referencia" maxlength="2" placeholder="Proximo de ..." required>
+                </div>
+                <div class="input-group">
+                    <label for="imagem_local">Imagem do local:</label>
+                    <img src="" alt="">
                 </div>
             </div>
             
@@ -254,14 +355,9 @@
                     <label for="produtora">Nome da Produtora/Empresa (Opcional):</label>
                     <input type="text" id="produtora" name="produtora" placeholder="Ex: Agência Rítmica">
                 </div>
-                <div class="input-group">
-                    <label for="telefone">Telefone de Contato:</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" required>
-                </div>
             </div>
 
             <button type="submit" class="cta-button">Cadastrar</button>
-
         </form>
         <div class="extra-links">
             <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
