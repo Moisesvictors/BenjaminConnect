@@ -1,0 +1,327 @@
+<?php
+session_start();
+include '../app/core/db_conecta.php';
+
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header("Location: ./login.php?status=erro&msg=Você não esta logado."); 
+    exit;
+}
+
+if(isset($_SESSION['estabelecimento_temp'])){
+    $temp_data = $_SESSION['estabelecimento_temp'];
+    unset($_SESSION['estabelecimento_temp']);
+}else{
+    $temp_data = [];
+}
+
+$msg = '';
+$mensagem_html = '';
+
+if (isset($_GET['msg']) && $_GET['status'] === 'erro') {
+    $msg = $_GET['msg'];
+    if (!empty($msg)) {
+        $cor = '#d9534f'; 
+        $mensagem_html = "
+            <div id='alerta' style='background-color: {$cor};'>
+                <p>" . htmlspecialchars($msg) . "</p>
+            </div>
+        ";
+    }
+}else if(isset($_GET['msg']) && $_GET['status'] === 'sucesso'){
+    $msg = $_GET['msg'];
+    if (!empty($msg)) {
+        $cor = '#21d417ff'; 
+        $mensagem_html = "
+            <div id='alerta' style='background-color: {$cor};'>
+                <p>" . htmlspecialchars($msg) . "</p>
+            </div>
+        ";
+    }
+}
+
+$id_usuario = $_SESSION['id_usuario'];
+$perfil = $_SESSION['perfil'];
+$sql_check = "SELECT 1 FROM USUARIO WHERE id_usuario = :id_usuario AND perfil = :perfil";
+$stmt_check = $pdo->prepare($sql_check);
+$stmt_check->execute([
+    ':id_usuario'=> $id_usuario,
+    ':perfil'=> $perfil
+]);
+
+if ($stmt_check->rowCount() === 0) {
+    session_destroy();
+    header("Location: ./login.php?status=erro&msg=Você não esta logado."); 
+    exit;
+}
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Estabelecimento - Benjamin</title>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .form-container {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 40px 50px;
+      border-radius: 20px;
+      width: 420px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      animation: slideUp 0.8s ease forwards;
+    }
+
+    h1 {
+      text-align:center;
+      margin-bottom: 25px;
+      font-size: 1.8em;
+    }
+
+    #alerta {
+        position: fixed; 
+        top: 0; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        z-index: 1000; 
+
+        padding: 15px 30px; 
+        margin-top: 20px;
+        border-radius: 5px; 
+        color: white; 
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        opacity: 1; 
+        transition: opacity 0.5s ease-out;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group textarea{
+        width: 100%;
+        font-size: 1em;
+        outline: none;
+        resize: none;
+        transition: background 0.3s, box-shadow 0.3s;
+        height: 7em;
+    }
+
+    .input-group label {
+      display:block;
+      font-size:0.9em;
+      margin-bottom:6px;
+    }
+
+    .input-group input,
+    .input-group select {
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:rgba(255,255,255,0.2);
+      color:#fff;
+      font-size:1em;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .input-group input:focus, select:focus {
+      background: rgba(255,255,255,0.3);
+      box-shadow:0 0 10px rgba(255,221,89,0.5);
+      outline:none;
+    }
+
+    .cta-button {
+      background: linear-gradient(45deg, #ffdd59, #ffc107);
+      color:#333;
+      padding:12px;
+      border:none;
+      border-radius:30px;
+      font-weight:bold;
+      font-size:1em;
+      width:100%;
+      cursor:pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(255,221,89,0.6);
+    }
+
+    .back-link {
+      display:block;
+      margin-top:20px;
+      text-align:center;
+      color:#fff;
+      font-size:0.9em;
+      text-decoration:none;
+      transition:color 0.3s;
+    }
+
+    .back-link:hover {color:#ffdd59;}
+
+    #outros-nicho {
+      display:none;
+      margin-top:10px;
+    }
+
+    @keyframes fadeIn {from{opacity:0;}to{opacity:1;}}
+    @keyframes slideUp {from{opacity:0; transform:translateY(40px);}to{opacity:1; transform:translateY(0);}}
+  </style>
+</head>
+<body>
+     <?php echo $mensagem_html; ?> 
+    <div class="form-container">
+        <h1>Cadastro de Estabelecimento</h1>
+        <form action="../app/process/processa_estabelecimento.php" method="POST">
+            <div class="input-group">
+                <label for="razao">Razão Social (Obrigatorio)</label>
+                <input 
+                    type="text" 
+                    id="razao" 
+                    name="razao" 
+                    placeholder="Ex: Bar do João LTDA" 
+                    value = "<?php echo htmlspecialchars($temp_data['razao_social'] ?? ''); ?>"
+                    required
+                >
+            </div>
+            <div class="input-group">
+                <label for="nome">Nome Fantasia (Opcional)</label>
+                <input 
+                    type="text" 
+                    id="nome" 
+                    name="nome" 
+                    placeholder="Ex: Bar do João" 
+                    value = "<?php echo htmlspecialchars($temp_data['nome_fantasia'] ?? ''); ?>"
+                >
+            </div>
+            <div class="input-group">
+                <label for="cidade">Endereço do Estabelecimento: (Obrigatorio)</label>
+                <input 
+                    type="text" 
+                    id="endereco" 
+                    name="endereco_estabelecimento" 
+                    placeholder="Sua cidade" 
+                    value = "<?php echo htmlspecialchars($temp_data['endereco'] ?? ''); ?>"
+                    required
+                >
+            </div>
+            <div class="input-group">
+                <label for="descricao">Referencia: (Opcional)</label>
+                <input 
+                    type="text" 
+                    id="referencia" 
+                    name="referencia" 
+                    placeholder="Proximo de ..." 
+                    value = "<?php echo htmlspecialchars($temp_data['referencia'] ?? ''); ?>"
+                >
+            </div>
+            <div class="input-group">
+                <label for="cidade">Cidade do Estabelecimento: (Obrigatorio)</label>
+                <input 
+                    type="text" 
+                    id="cidade" 
+                    name="cidade_estabelecimento" 
+                    placeholder="Sua cidade" 
+                    value = "<?php echo htmlspecialchars($temp_data['cidade'] ?? ''); ?>"
+                    required
+                >
+            </div>
+            <div class="input-group">
+                <label for="uf">UF do Estabelecimento: (Obrigatorio)</label>
+                <select id="uf" name="uf_estabelecimento" required>
+                    <option value="" disabled selected>Selecione a UF</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Gêneros Tocados no Local: (Obrigatorio)</label>
+                <div class="input-generos" style="display: flex; flex-wrap: wrap; gap: 10px; color: #fff;">
+                    <label><input type="checkbox" name="generos[]" value='Rock'>Rock</label>
+                    <label><input type="checkbox" name="generos[]" value="Samba">Samba</label>
+                    <label><input type="checkbox" name="generos[]" value="Forro">Forró</label>
+                    <label><input type="checkbox" name="generos[]" value="Rap">Rap</label>
+                    <label><input type="checkbox" name="generos[]" value="HipHop">HipHop</label>
+                    <label><input type="checkbox" name="generos[]" value="Pop">Pop</label>
+                    <label><input type="checkbox" name="generos[]" value="Gospel">Gospel</label>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="imagem_local">Imagem do local:</label>
+                <img src="" alt="">
+            </div>
+            <div class="input-group">
+                <label for="descricao">Descrição Breve do Ambiente: (Obrigatorio)</label>
+                <textarea 
+                    id="descricao" 
+                    name="descricao" 
+                    rows="5" 
+                    placeholder="Descrição do ambiente"
+                    require
+                    ></textarea>
+            </div>
+
+        <button type="submit" class="cta-button">Cadastrar Estabelecimento</button>
+        </form>
+
+        <a href="./estabelecimentos.html" class="back-link">⬅ Voltar</a>
+  </div>
+
+  <script>
+     document.addEventListener('DOMContentLoaded', function() {
+        var alerta = document.getElementById('alerta');
+        
+        if (alerta) {
+            setTimeout(function() {
+                alerta.style.opacity = '0';
+                setTimeout(function() {
+                    alerta.remove(); 
+                }, 500); 
+            }, 5000); 
+        }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Benjamin</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            /* 
+            padding: 0; */
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            height: 100vh;
+            animation: fadeIn 1.2s ease forwards;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Container principal */
+        .cadastro-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 380px;
+            animation: slideUp 1s ease forwards;
+        }
+
+        .cadastro-container h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .cadastro-container p {
+            font-size: 0.95em;
+            /* margin-bottom: 25px; */
+            color: #e0e0e0;
+        }
+
+        /* Campos especificos dos usuarios */
+        .campos-especificos{
+            display: none;
+        }
+
+        .campos-especificos h3{
+            padding-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .outros-nicho{
+            display:none;
+            margin-top:10px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .input-group .input-generos{
+            display: flex; 
+            flex-wrap: wrap;
+            gap: 10px; 
+        }
+
+        .input-group .input-generos label{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .input-group textarea{
+            width: 100%;
+            font-size: 1em;
+            outline: none;
+            resize: none;
+            transition: background 0.3s, box-shadow 0.3s;
+            height: 7em;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1em;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input::placeholder {
+            color: #ddd;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 221, 89, 0.5);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ffdd59, #ffc107);
+            color: #333;
+            padding: 12px 35px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 221, 89, 0.6);
+        }
+
+        .extra-links {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .extra-links a {
+            color: #ffdd59;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .extra-links a:hover {
+            color: #fff;
+        }
+
+        /* Botão Voltar */
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #fff;
+            font-size: 0.9em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #ffdd59;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideUp {
+            from {opacity: 0; transform: translateY(40px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* Responsividade */
+        @media (max-width: 400px) {
+            .cadastro-container {
+                width: 90%;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cadastro-container">
+        <h1>Crie sua Conta</h1>
+        <p>Junte-se à comunidade Benjamin e conecte-se com o mundo artístico.</p>
+
+        <form action="../app/process/processa_cadastro.php" method="post">
+
+            <!-- Cadastro de usuario -->
+            <div class="input-group">
+                <label for="nome">Nome completo (Obrigatorio)</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+            </div>
+            <div class="input-group">
+                    <label for="cnpj_cpf">CNPJ/CPF: (Obrigatorio)</label>
+                    <input type="text" id="cnpj_cpf" name="cnpj_cpf" placeholder="Identificação" required>
+                </div>
+            <div class="input-group">
+                <label for="email">E-mail (Obrigatorio)</label>
+                <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+            </div>
+
+            <div class="input-group">
+                    <label for="telefone">Telefone de Contato: (Obrigatorio)</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" required>
+            </div>
+    
+            <div class="input-group">
+                <label for="cidade">Endereço: (Obrigatorio)</label>
+                <input type="text" id="endereco" name="endereco" placeholder="Sua cidade" required>
+            </div>
+
+            <div class="input-group">
+                <label for="cidade">Cidade: (Obrigatorio)</label>
+                <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required>
+            </div>
+
+            <div class="input-group">
+                <label for="uf">UF: (Obrigatorio)</label>
+                <select id="uf" name="uf" required>
+                    <option value="" disabled selected>Selecione a UF</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha (Obrigatorio)</label>
+                <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmar">Confirmar senha (Obrigatorio)</label>
+                <input type="password" id="confirmar" name="confirmar" placeholder="Confirme sua senha" required>
+            </div>
+            <div class="input-group">
+                <label for="tipo">Você é: (Obrigatorio)</label>
+                <select id="tipo" name="tipo" onchange="mostrarCamposPerfil()" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="ARTISTA">Artista</option>
+                    <option value="ESTABELECIMENTO">Estabelecimento</option>
+                    <option value="PRODUTOR">Produtor</option>
+                </select>
+            </div>
+
+            <hr style="margin: 30px 0; border-color: rgba(255, 255, 255, 0.3);">
+
+            <!-- #### CAMPOS ESPECIFICOS PARA O ARTISTA #### -->
+            <div id="campos-artista" class="campos-especificos">
+                <h3>Detalhes do Artista</h3>
+                <div class="input-group">
+                    <label for="nome_artistico">Nome Artístico/Banda: (Opcional)</label>
+                    <input type="text" id="nome_artistico" name="nome_artistico" placeholder="Ex: Lucas Melody">
+                </div>
+                <div class="input-group">
+                <label>Gêneros Musicais Tocados: (Obrigatorio)</label>
+                    <div id="generos-artista" class="input-generos">
+                        <label><input type="checkbox" name="generos[]" value='Rock'> Rock</label>
+                        <label><input type="checkbox" name="generos[]" value="Samba"> Samba</label>
+                        <label><input type="checkbox" name="generos[]" value="Forro"> Forró</label>
+                        <label><input type="checkbox" name="generos[]" value="Rap"> Rap</label>
+                        <label><input type="checkbox" name="generos[]" value="HipHop"> HipHop</label>
+                        <label><input type="checkbox" name="generos[]" value="Pop"> Pop</label>
+                        <label><input type="checkbox" name="generos[]" value="Gospel"> Gospel</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="bio">Biografia Curta: (Obrigatorio)</label>
+                    <textarea id="bio" name="bio" rows="3" placeholder="Sua descrição e estilo" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="foto_perfil">Foto de perfil:</label>
+                    <img name="foto_perfil" src="" alt="">
+                </div>
+            </div>
+            
+            <!-- #### CAMPOS ESPECIFICOS PARA O ESTABELECIMENTO #### -->
+            <div id="campos-estabelecimento" class="campos-especificos">
+                <h3>Detalhes do Local</h3>
+                <div class="input-group">
+                    <label for="nome_fantasia">Razão Social: (Obrigatorio)</label>
+                    <input type="text" id="razao_social" name="razao_social" placeholder="Ex: Espaço Rock City" required>
+                </div>
+                <div class="input-group">
+                    <label for="nome_fantasia">Nome Fantasia do Local: (Opcional)</label>
+                    <input type="text" id="nome_fantasia" name="nome_fantasia" placeholder="Ex: Pub Rock City">
+                </div>
+                <div class="input-group">
+                    <label for="cidade">Endereço do Estabelecimento: (Obrigatorio)</label>
+                    <input type="text" id="endereco_estabelecimento" name="endereco_estabelecimento" placeholder="Sua cidade" required>
+                </div>
+                <div class="input-group">
+                    <label for="cidade">Cidade do Estabelecimento: (Obrigatorio)</label>
+                    <input type="text" id="cidade_estabelecimento" name="cidade_estabelecimento" placeholder="Sua cidade" required>
+                </div>
+                <div class="input-group">
+                    <label for="descricao">Referencias: (Opcional)</label>
+                    <input type="text" id="referencia" name="referencia" maxlength="2" placeholder="Proximo de ..." >
+                </div>
+                <div class="input-group">
+                    <label for="imagem_local">Imagem do local:</label>
+                    <img src="" alt="">
+                </div>
+            </div>
+            
+            <!-- #### CAMPOS ESPECIFICOS PARA O PRODUTOR #### -->
+            <div id="campos-produtor" class="campos-especificos">
+                <h3>Detalhes do Produtor</h3>
+                <div class="input-group">
+                    <label for="produtora">Nome da Produtora/Empresa (Opcional):</label>
+                    <input type="text" id="produtora" name="produtora" placeholder="Ex: Agência Rítmica" required>
+                </div>
+            </div>
+
+            <button id="btn-cadastrar" type="submit" class="cta-button">Cadastrar</button>
+        </form>
+        <div class="extra-links">
+            <p>Já tem uma conta? <a href="./login.php">Faça login</a></p>
+        </div>
+
+        <a href="../index.html" class="back-link">⬅ Voltar para a Página Inicial</a>
+    </div>
+
+    <script>
+        function mostrarCamposPerfil(){
+            const selectElement = document.getElementById('tipo');
+            const tipo = selectElement.value;
+            const btnCadastrar = document.getElementById('btn-cadastrar')
+
+            const prod = document.getElementById('campos-produtor')
+            const estabelecimento = document.getElementById('campos-estabelecimento')
+            const artista = document.getElementById('campos-artista')
+
+            prod.style.display='none';
+            estabelecimento.style.display='none';
+            artista.style.display='none';
+                
+            let camposParaHabilitar = [];
+            
+            const camposEstabelecimento = [
+                        'razao_social', 
+                        'nome_fantasia', 
+                        'endereco_estabelecimento', 
+                        'cidade_estabelecimento', 
+                        'descricao', 
+                        'referencia',
+                        'generos-estabelecimento'
+                    ];
+
+            const camposArtista = [
+                'nome_artistico', 
+                'bio', 
+                'generos-artista' 
+            ];
+
+            const camposProdutor = [
+                'produtora' 
+            ];
+            
+            [...camposEstabelecimento, ...camposArtista, ...camposProdutor].forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.setAttribute('disabled', 'true');
+                }
+            });
+
+            if(tipo === "ESTABELECIMENTO"){
+                estabelecimento.style.display="block";
+                camposParaHabilitar = camposEstabelecimento;
+                btnCadastrar.textContent = "Continuar"
+            }else if(tipo === "ARTISTA"){
+                artista.style.display="block";
+                camposParaHabilitar = camposArtista;
+            }else if(tipo === "PRODUTOR"){
+                prod.style.display="block";
+                camposParaHabilitar = camposProdutor;
+            }
+
+            camposParaHabilitar.forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.removeAttribute('disabled');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectPerfil = document.getElementById('tipo');
+            if (selectPerfil) {
+                selectPerfil.addEventListener('change', mostrarCamposPerfil);
+                mostrarCamposPerfil(); 
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estabelecimentos - Benjamin</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    h1 {
+      font-size: 2.3em;
+      margin-bottom: 40px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .option-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      padding: 25px 40px;
+      border-radius: 15px;
+      text-align: center;
+      width: 250px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .option-card:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.2);
+    }
+
+    .option-card h3 {
+      color: #ffdd59;
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    .option-card p {
+      font-size: 0.9em;
+      color: #e0e0e0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .back-link {
+      margin-top: 40px;
+      color: #fff;
+      font-size: 0.9em;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #ffdd59;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <h1>Área de Estabelecimentos</h1>
+
+  <div class="options">
+    <a href="./cadastroestabelecimento.php">
+      <div class="option-card">
+        <h3>🏢 Cadastrar Estabelecimento</h3>
+        <p>Adicione seu bar, restaurante ou casa de shows à plataforma.</p>
+      </div>
+    </a>
+
+    <a href="./procurarestabelecimento.php">
+      <div class="option-card">
+        <h3>🔍 Procurar Estabelecimento</h3>
+        <p>Veja os estabelecimentos já cadastrados e seus estilos musicais.</p>
+      </div>
+    </a>
+
+    <a href="./ajuda.html">
+      <div class="option-card">
+        <h3>💬 Ajuda</h3>
+        <p>Precisa de suporte? Entre em contato conosco.</p>
+      </div>
+    </a>
+  </div>
+
+  <a href="../index.html" class="back-link">⬅ Voltar à Página Inicial</a>
+</body>
+</html>
