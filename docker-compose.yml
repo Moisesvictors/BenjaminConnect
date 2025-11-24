@@ -4,6 +4,11 @@ services:
     build: .
     ports:
       - "80:80"
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_HOST: ${DB_HOST} 
+      DB_USER: ${DB_USER}
     volumes:
       - .:/var/www/html
     depends_on:
@@ -15,7 +20,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USER}
       MYSQL_HOST: ${DB_HOST}
     volumes:
       - ./mysql-data:/var/lib/mysql

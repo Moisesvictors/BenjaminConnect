@@ -5,6 +5,11 @@ CREATE TABLE IF NOT EXISTS USUARIO (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
+    cpf_cnpj VARCHAR(20) UNIQUE,
+    telefone VARCHAR(11) UNIQUE,
+    endereco VARCHAR(200),
+    cidade VARCHAR(100),
+    uf VARCHAR(2),
     esta_ativo BOOLEAN DEFAULT TRUE,
     INDEX idx_usuario_email (email)
 );
@@ -14,6 +19,14 @@ CREATE TABLE IF NOT EXISTS GENERO_MUSICAL (
     id_genero_musical INT PRIMARY KEY AUTO_INCREMENT,
     nome_genero_musical VARCHAR(100) UNIQUE NOT NULL
 );
+INSERT INTO GENERO_MUSICAL(nome_genero_musical) VALUES
+    ('Gospel'),
+    ('Pop'),
+    ('HipHop'),
+    ('Rap'),
+    ('Forro'),
+    ('Samba'),
+    ('Rock');
 
 -- #### TABELA ARTISTAS
 CREATE TABLE IF NOT EXISTS ARTISTAS (
@@ -21,13 +34,12 @@ CREATE TABLE IF NOT EXISTS ARTISTAS (
     id_usuario INT UNIQUE NOT NULL,
     nome_artistico VARCHAR(100) NOT NULL,
     bio TEXT,
-    estado VARCHAR(50),
     url_foto VARCHAR(255),
     
     FOREIGN KEY (id_usuario) 
         REFERENCES USUARIO(id_usuario)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 );
 
 -- #### TABELA PRODUTOR
@@ -45,22 +57,22 @@ CREATE TABLE IF NOT EXISTS PRODUTOR (
 -- #### TABELA ESTABELECIMENTO
 CREATE TABLE IF NOT EXISTS ESTABELECIMENTO (
     id_estabelecimento INT PRIMARY KEY AUTO_INCREMENT,
-    id_usuario INT UNIQUE NOT NULL,
+    id_usuario INT NOT NULL,
     nome_fantasia VARCHAR(100) NOT NULL,
     razao_social VARCHAR(100),
-    CNPJ_CPF VARCHAR(20) UNIQUE,
-    endereco VARCHAR(200),
-    cidade VARCHAR(100),
-    uf VARCHAR(2),
+    endereco_estabelecimento VARCHAR(200),
+    cidade_estabelecimento VARCHAR(100),
+    uf_estabelecimento VARCHAR(2),
     descricao TEXT,
     referencia VARCHAR(100),
+    url_imagem_local VARCHAR(255),
     
     FOREIGN KEY (id_usuario) 
         REFERENCES USUARIO(id_usuario)
         ON DELETE CASCADE 
         ON UPDATE CASCADE,
 
-    INDEX idx_estabelecimento_cidade_uf (cidade, uf),
+    INDEX idx_estabelecimento_cidade_uf_endereco (cidade_estabelecimento, uf_estabelecimento, endereco_estabelecimento)
 );
 
 -- #### TABELA ARTISTAS_GENERO

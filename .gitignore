@@ -1,2 +1,5 @@
 # Arquivo de variaveis de ambiente
 .env
+
+# Pasta de persistencia de dados do container Mysql
+mysql-data/
